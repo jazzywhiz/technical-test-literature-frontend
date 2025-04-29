@@ -42,7 +42,7 @@ Literature App es una aplicación frontend que se conecta a una API Literature p
 git clone https://github.com/jazzywhiz/technical-test-literature-frontend.git
 
 # Navegar al directorio
-cd literature-app
+cd technical-test-literature-frontend
 
 # Instalar dependencias (con npm)
 npm install
