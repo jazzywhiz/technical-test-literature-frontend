@@ -4,6 +4,7 @@ import { Book } from '@/types';
 import { toast } from 'sonner';
 import { useAuthor } from '@hooks/useAuthors';
 
+// Hook for fetching books list
 export function useBooks() {
   return useQuery({
     queryKey: ['books'],
@@ -11,6 +12,7 @@ export function useBooks() {
   });
 }
 
+// Hook for fetching a single book
 export function useBook(id: number | undefined) {
   return useQuery({
     queryKey: ['book', id],
@@ -19,6 +21,7 @@ export function useBook(id: number | undefined) {
   });
 }
 
+// Hook for creating a book
 export function useCreateBook() {
   const queryClient = useQueryClient();
 
@@ -26,7 +29,7 @@ export function useCreateBook() {
     mutationFn: (book: Omit<Book, 'id'>) => createBook(book),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
-      toast.success('Book created successfully');
+      toast.success('Libro creado correctamente.');
     },
     onError: (error) => {
       toast.error(`Failed to create book: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -34,6 +37,7 @@ export function useCreateBook() {
   });
 }
 
+// Hook for updating a book
 export function useUpdateBook() {
   const queryClient = useQueryClient();
 
@@ -42,7 +46,7 @@ export function useUpdateBook() {
     onSuccess: (updatedBook) => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
       queryClient.setQueryData(['book', updatedBook.id], updatedBook);
-      toast.success('Book updated successfully');
+      toast('Libro actualizado correctamente.');
     },
     onError: (error) => {
       toast.error(`Failed to update book: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -50,6 +54,7 @@ export function useUpdateBook() {
   });
 }
 
+// Hook for deleting a book
 export function useDeleteBook() {
   const queryClient = useQueryClient();
 
@@ -58,7 +63,7 @@ export function useDeleteBook() {
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
       queryClient.removeQueries({ queryKey: ['book', id] });
-      toast.success('Book deleted successfully');
+      toast('Libro eliminado correctamente.');
     },
     onError: (error) => {
       toast.error(`Failed to delete book: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -70,7 +75,7 @@ export function useDeleteBook() {
 export function useBooksByAuthor(authorId: number | undefined) {
   const { data: author } = useAuthor(authorId);
   const { data: books } = useBooks();
-  
+
   const filteredBooks = books?.filter(book => author?.bookId === book.id) || [];
   console.log('Filtered Books by bookId:', filteredBooks);
 

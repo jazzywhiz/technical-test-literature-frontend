@@ -43,7 +43,7 @@ export function useCreateAuthor() {
     mutationFn: (author: Omit<Author, 'id'>) => createAuthor(author),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['authors'] });
-      toast.success('Author created successfully');
+      toast.success('Autor creado correctamente.');
     },
     onError: (error) => {
       toast.error(`Failed to create author: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -60,7 +60,7 @@ export function useUpdateAuthor() {
     onSuccess: (updatedAuthor) => {
       queryClient.invalidateQueries({ queryKey: ['authors'] });
       queryClient.setQueryData(['author', updatedAuthor.id], updatedAuthor);
-      toast.success('Author updated successfully');
+      toast('Autor actualizado correctamente.');
     },
     onError: (error) => {
       toast.error(`Failed to update author: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -68,7 +68,7 @@ export function useUpdateAuthor() {
   });
 }
 
-// Hook for deleting an author
+
 export function useDeleteAuthor() {
   const queryClient = useQueryClient();
 
@@ -77,7 +77,7 @@ export function useDeleteAuthor() {
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: ['authors'] });
       queryClient.removeQueries({ queryKey: ['author', id] });
-      toast.success('Author deleted successfully');
+      toast('Autor eliminado correctamente.');
     },
     onError: (error) => {
       toast.error(`Failed to delete author: ${error instanceof Error ? error.message : 'Unknown error'}`);
